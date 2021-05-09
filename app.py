@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+import MySQLdb
 
 app = Flask(__name__)
 app.secret_key = '2d1d056b2b0272e6723dcb6a093b10c6'
