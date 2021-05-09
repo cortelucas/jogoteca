@@ -5,12 +5,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jogoteca</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
 <body>
+  <header>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand logo" href="{{ url_for('index') }}">Jogoteca</a>
+        <form class="d-flex">
+          <a class="nav-link sair" href="{{ url_for('logout') }}">Sair</a>
+        </form>
+      </div>
+    </nav>
+  </header>
   <div class="container">
+
     <div class="page-header">
       <h1 class="display-4">{{ titulo }}</h1>
     </div>

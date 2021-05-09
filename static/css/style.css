@@ -1,0 +1,25 @@
+/*Imports*/
+@import url("./bootstrap/bootstrap.css");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+/*Logo*/
+.logo {
+  font-family: Pacifico, hand;
+  font-size: 2rem;
+  text-shadow: 0px 0px 4px white;
+  color: #212529 !important;
+}
+
+.logo:hover {
+  transition: 1s;
+  transform: scale(1.05);
+}
+
+.sair {
+  color: white;
+}
+
+.sair:hover {
+  color: white;
+  border-bottom: 5px solid white;
+}
