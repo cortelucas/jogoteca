@@ -43,9 +43,10 @@ def criar():
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
     jogo = jogo_dao.salvar(jogo)
-    arquivo = redirect.files['arquivo']
+
+    arquivo = request.files['arquivo']
     upload_path = app.config['UPLOAD_PATH']
-    arquivo.save(f'{upload_path}/capa{jogo.nome}.jpg')
+    arquivo.save(f'{upload_path}/capa{jogo.id}.jpg')
     return redirect(url_for('index'))
 
 
@@ -54,7 +55,7 @@ def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('login', proxima=url_for('editar')))
     jogo = jogo_dao.buscar_por_id(id)
-    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=f'capa{jogo.nome}.jpg')
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=f'capa{id}.jpg')
 
 
 @app.route('/atualizar', methods=['POST', ])
@@ -101,7 +102,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/upload/<nome_arquivo>')
+@app.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
     return send_from_directory('uploads', nome_arquivo)
 

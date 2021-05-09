@@ -1,8 +1,8 @@
 {% extends "template.html" %}
 {% block content %}
-<form class="row" action="{{ url_for('atualizar') }}" method="POST">
+<form class="row" action="{{ url_for('atualizar') }}" method="POST" enctype="multipart/form-data">
   <figure class="thumb col-md-4">
-    <img class="img-fluid" src="{{ url_for('imagem', nome_arquivo='capa_jogo') }}" alt="capa padrão">
+    <img class="img-fluid" src="{{ url_for('imagem', nome_arquivo=capa_jogo) }}" alt="{{ jogo.nome }}">
     <figcaption>
       <label for="formFile" class="form-label">
         <input class="form-control" type="file" name="arquivo" id="" accept=".jpg">
