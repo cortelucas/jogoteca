@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from models import Jogo, Usuario
-from dao import JogoDao
+from dao import JogoDao, UsuarioDao
 import mysql.connector
 
 app = Flask(__name__)
@@ -16,21 +16,12 @@ db = mysql.connector.connect(
 )
 
 jogo_dao = JogoDao(db)
-
-
-u1 = Usuario('lucas', 'Lucas Corte', '2801')
-u2 = Usuario('andressa', 'Andressa Karino', '0709')
-u3 = Usuario('leo', 'Leo Corte', '2405')
-
-usuarios = {u1.id: u1, u2.id: u2, u3.id: u3}
-
-jogo1 = Jogo('Super Mario', 'Ação', 'SNES')
-jogo2 = Jogo('Pokemon Gold', 'RPG', 'GBA')
-lista = [jogo1, jogo2]
+usuario_dao = UsuarioDao(db)
 
 
 @app.route('/')
 def index():
+    lista = jogo_dao.listar()
     return render_template("lista.html", titulo="Jogos", jogos=lista)
 
 
@@ -59,13 +50,13 @@ def login():
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
-    if request.form['usuario'] in usuarios:
-        usuario = usuarios[request.form['usuario']]
+    usuario = usuario_dao.busca_por_id(request.form['usuario'])
+    if usuario:
         if usuario.senha == request.form['senha']:
             session['usuario_logado'] = usuario.id
-        flash(usuario.nome + " logou com sucesso")
-        proxima_pagina = request.form['proxima']
-        return redirect(proxima_pagina)
+            flash(usuario.nome + " logou com sucesso")
+            proxima_pagina = request.form['proxima']
+            return redirect(proxima_pagina)
     else:
         flash('Não logado, tente novamente.')
         return redirect(url_for('login'))
