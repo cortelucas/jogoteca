@@ -17,8 +17,14 @@
         <input type="text" id="console" name="console" class="form-control">
       </div>
       <div class="mt-1">
-        <label for="formFile" class="form-label">Capa do Jogo</label>
-        <input class="form-control" type="file" name="arquivo" id="" accept=".jpg">
+        <figure>
+          <img class="img-fluid" src="{{ url_for('imagem', nome_arquivo='capa_padrao.jpg') }}" alt="capa padrão">
+          <figcaption>
+            <label for="formFile" class="form-label">
+              <input class="form-control" type="file" name="arquivo" id="" accept=".jpg">
+            </label>
+          </figcaption>
+        </figure>
       </div>
 
       <div class="mt-3 container">
