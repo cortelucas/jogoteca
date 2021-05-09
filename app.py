@@ -47,7 +47,7 @@ def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('login', proxima=url_for('editar')))
     jogo = jogo_dao.buscar_por_id(id)
-    return render_template('editar.html', titulo="Editar Jogo", jogo=jogo)
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
 
 
 @app.route('/atualizar', methods=['POST', ])
