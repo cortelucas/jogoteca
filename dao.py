@@ -16,11 +16,9 @@ class JogoDao:
         cursor = self.__db.cursor()
 
         if (jogo.id):
-            cursor.execute(SQL_ATUALIZA_JOGO, (jogo.nome,
-                           jogo.categoria, jogo.console, jogo.id))
+            cursor.execute(SQL_ATUALIZA_JOGO, (jogo.nome, jogo.categoria, jogo.console, jogo.id))
         else:
-            cursor.execute(SQL_CRIA_JOGO, (jogo.nome,
-                           jogo.categoria, jogo.console))
+            cursor.execute(SQL_CRIA_JOGO, (jogo.nome, jogo.categoria, jogo.console))
             jogo.id = cursor.lastrowid
         self.__db.commit()
         return jogo
@@ -31,7 +29,7 @@ class JogoDao:
         jogos = traduz_jogos(cursor.fetchall())
         return jogos
 
-    def buscar_por_id(self, id):
+    def busca_por_id(self, id):
         cursor = self.__db.cursor()
         cursor.execute(SQL_JOGO_POR_ID, (id,))
         tupla = cursor.fetchone()
