@@ -2,9 +2,13 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from models import Jogo, Usuario
 from dao import JogoDao, UsuarioDao
 import mysql.connector
+import os
 
 app = Flask(__name__)
 app.secret_key = '2d1d056b2b0272e6723dcb6a093b10c6'
+
+app.config['UPLOAD_PATH'] = os.path.dirname(
+    os.path.abspath(__file__)) + '/uploads'
 
 db = mysql.connector.connect(
     host="localhost",
@@ -38,7 +42,10 @@ def criar():
     categoria = request.form['categoria']
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
-    jogo_dao.salvar(jogo)
+    jogo = jogo_dao.salvar(jogo)
+    arquivo = redirect.files['arquivo']
+    upload_path = app.config['UPLOAD_PATH']
+    arquivo.save(f'{upload_path}/capa{jogo.nome}.jpg')
     return redirect(url_for('index'))
 
 
