@@ -1,22 +1,21 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
-import MySQLdb
+from models import Jogo, Usuario
+from dao import JogoDao
+import mysql.connector
 
 app = Flask(__name__)
 app.secret_key = '2d1d056b2b0272e6723dcb6a093b10c6'
 
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    port=3306,
+    password="0612AnLu+",
+    database="jogoteca",
+    auth_plugin='mysql_native_password'
+)
 
-class Jogo:
-    def __init__(self, nome, categoria, console):
-        self.nome = nome
-        self.categoria = categoria
-        self.console = console
-
-
-class Usuario:
-    def __init__(self, id, nome, senha):
-        self.id = id
-        self.nome = nome
-        self.senha = senha
+jogo_dao = JogoDao(db)
 
 
 u1 = Usuario('lucas', 'Lucas Corte', '2801')
@@ -48,7 +47,7 @@ def criar():
     categoria = request.form['categoria']
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
-    lista.append(jogo)
+    jogo_dao.salvar(jogo)
     return redirect(url_for('index'))
 
 
